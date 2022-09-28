@@ -1,12 +1,12 @@
 import unittest
-import app as tested_app
+import application as tested_app
 
 
 class FlaskAppTests(unittest.TestCase):
 
     def setUp(self):
-        tested_app.app.config['TESTING'] = True
-        self.app = tested_app.app.test_client()
+        tested_app.application.config['TESTING'] = True
+        self.app = tested_app.application.test_client()
 
     def test_get_hello_endpoint(self):
         r = self.app.get('/')
