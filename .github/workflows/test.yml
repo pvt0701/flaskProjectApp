@@ -1,4 +1,10 @@
-name: CI
+name: CI-CD-Pipeline-to-AWS-ElasticBeastalk
+env:
+  EB_PACKAGE_S3_BUCKET_NAME : "my-flask-application"
+  EB_APPLICATION_NAME       : "Myflask"
+  EB_ENVIRONMENT_NAME       : "Myflask-env"
+  DEPLOY_PACKAGE_NAME       : "flask_app_${{ github.sha }}.zip"
+  AWS_REGION_NAME           : " us-east-1"
 
 on:
   push:
@@ -13,8 +19,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
       - uses: actions/checkout@v2
+      
+      - name: Create ZIP deployment package
+        run : zip -r ${{ env.DEPLOY_PACKAGE_NAME }} ./ -x *.git*
 
-      # Set up Python 3.6 environment
+      # Set up Python 3.8 environment
       - name: Set up Python 3.8
         uses: actions/setup-python@v1
         with:
